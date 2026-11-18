@@ -64,9 +64,10 @@ await runBars({
 
     const symbol = state.hello.symbols[0].symbol;
     const held = state.positions.get(symbol);
-    const close = state.close(symbol);
+    const closeRaw = state.close(symbol);
     const orders: (SellInput | BuyInput)[] = [];
-    if (close === null) return orders;
+    if (closeRaw === null) return orders;
+    const close = Number(closeRaw); // price units as float64 for indicator math
 
     if (held !== undefined) {
       const value = state.value(symbol, held.qty);
